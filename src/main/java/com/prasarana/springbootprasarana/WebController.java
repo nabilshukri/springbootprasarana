@@ -39,6 +39,11 @@ public class WebController {
     public String handleLogin() {
         return "login";
     }
+
+    @GetMapping("/register")
+    public String handleRegister() {
+        return "register";
+    }
 }
 
 
