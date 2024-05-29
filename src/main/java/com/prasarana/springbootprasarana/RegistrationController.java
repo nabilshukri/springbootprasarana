@@ -34,4 +34,17 @@ public class RegistrationController {
         return ResponseEntity.ok("User registered successfully");
     }
 
+    @PostMapping("/register/admin")
+    public ResponseEntity<String> createAdmin(@RequestBody MyUser user) {
+        Optional<MyUser> existingUser = myUserRepository.findByUsername(user.getUsername());
+        if (existingUser.isPresent()) {
+            return ResponseEntity.badRequest().body("Username already exists.");
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole("ADMIN");
+        myUserRepository.save(user);
+        return ResponseEntity.ok("User registered successfully");
+    }
+
 }

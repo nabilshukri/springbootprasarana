@@ -99,8 +99,11 @@
     <a href="#"  id="logout" style="float:right;" >Logout</a>
 </div>
 <div class="container">
-    <h1 th:text="'Welcome, ' + ${username} + '!'">Welcome, User!</h1>
+    <h1 th:text="'Welcome, ' + ${username} + '!'">Welcome, Admin!</h1>
     <p>This is the admin home page.</p>
+    <div id="RegisterLink" style="text-align: center; margin-top: 10px;">
+        <a href="/register_admin">Register New Admin</a>
+    </div>
 </div>
 
 <div id="logoutPopup" class="logout-popup">
