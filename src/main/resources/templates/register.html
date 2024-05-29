@@ -20,6 +20,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 300px;
             border-radius: 5px;
+            text-align: center; /* Added to center align the content */
         }
         .container h2 {
             text-align: center;
@@ -28,9 +29,10 @@
         .container input {
             width: 100%;
             padding: 10px;
-            margin: 10px 0;
+            margin: 10px auto; /* Changed margin to auto to center the input fields */
             border: 1px solid #ccc;
             border-radius: 3px;
+            box-sizing: border-box; /* Added to include padding and border in the width calculation */
         }
         .container button {
             width: 100%;
@@ -49,6 +51,11 @@
             color: green;
             margin-bottom: 20px;
         }
+        .error-message {
+            text-align: center;
+            color: red;
+            margin-bottom: 20px;
+        }
         .login-button {
             background-color: #28a745;
         }
@@ -63,12 +70,19 @@
     <div id="successMessage" class="success-message" style="display:none;">
         Registration successful!
     </div>
+    <div id="errorMessage" class="error-message" style="display:none;">
+        <!-- Error message will be inserted here -->
+    </div>
     <form id="registrationForm" th:action="@{/register/user}" method="post">
         <input type="text" id="username" name="username" placeholder="Username" required>
         <input type="password" id="password" name="password" placeholder="Password" required>
+        <input type="password" id="rePassword" name="rePassword" placeholder="Re-enter Password" required>
         <button type="submit">Register</button>
     </form>
     <button id="loginButton" class="login-button" style="display:none;" onclick="redirectToLogin()">Go to Login</button>
+    <div id="loginLink" style="text-align: center; margin-top: 10px;">
+        <a href="/login">Already have an account? Login here.</a>
+    </div>
 </div>
 
 <script>
@@ -77,6 +91,16 @@
 
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
+        const rePassword = document.getElementById('rePassword').value;
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+
+        if (password !== rePassword) {
+            errorMessage.textContent = 'Passwords do not match.';
+            errorMessage.style.display = 'block';
+            successMessage.style.display = 'none';
+            return;
+        }
 
         const response = await fetch('/register/user', {
             method: 'POST',
@@ -87,11 +111,16 @@
         });
 
         if (response.ok) {
-            document.getElementById('successMessage').style.display = 'block';
+            successMessage.style.display = 'block';
             document.getElementById('registrationForm').style.display = 'none';
             document.getElementById('loginButton').style.display = 'block';
+            document.getElementById('loginLink').style.display = 'none';
+            errorMessage.style.display = 'none';
         } else {
-            alert('Registration failed. Please try again.');
+            const errorText = await response.text();
+            errorMessage.textContent = errorText;
+            errorMessage.style.display = 'block';
+            successMessage.style.display = 'none';
         }
     });
 

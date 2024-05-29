@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 public class RegistrationController {
 
@@ -28,14 +30,15 @@ public class RegistrationController {
 
     @PostMapping("/register/user")
     public ResponseEntity<String> createUser(@RequestBody MyUser user) {
-        try {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setRole("USER");
-            myUserRepository.save(user);
-            return ResponseEntity.ok("User registered successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Registration failed");
+        Optional<MyUser> existingUser = myUserRepository.findByUsername(user.getUsername());
+        if (existingUser.isPresent()) {
+            return ResponseEntity.badRequest().body("Username already exists.");
         }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole("USER");
+        myUserRepository.save(user);
+        return ResponseEntity.ok("User registered successfully");
     }
 
 }
