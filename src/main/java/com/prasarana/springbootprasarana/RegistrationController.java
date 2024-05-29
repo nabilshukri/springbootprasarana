@@ -21,13 +21,6 @@ public class RegistrationController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-//    @PostMapping("/register/user")
-//    public MyUser createUser(@RequestBody MyUser user){
-//
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        return myUserRepository.save(user);
-//    }
-
     @PostMapping("/register/user")
     public ResponseEntity<String> createUser(@RequestBody MyUser user) {
         Optional<MyUser> existingUser = myUserRepository.findByUsername(user.getUsername());
