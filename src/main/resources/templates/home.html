@@ -72,6 +72,35 @@
         a:hover {
           background-color: #2980b9;
         }
+
+        .logout-popup {
+          display: none;
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: #fefefe;
+          padding: 20px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+          z-index: 999;
+        }
+
+        /* Style for the buttons inside the popup */
+        .logout-popup button {
+          background-color: #3498db;
+          color: white;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          margin-right: 10px;
+        }
+
+        .logout-popup button.cancel {
+          background-color: #ccc;
+        }
     </style>
 </head>
 <body>
@@ -79,12 +108,50 @@
     <a href="/home">Home</a>
     <a href="/user/home">User Home</a>
     <a href="/admin/home">Admin Home</a>
-    <a href="/logout" style="float:right;">Logout</a> <!-- Logout option added -->
+    <a href="#"  id="logout" style="float:right;" >Logout</a>
 </div>
 <div class="container">
     <h1>Prasarana's Spring Security Assessment</h1>
     <p>The purpose of this assessment is to assess your skills and understanding of Spring Boot,
         specifically focusing on Spring Security and Thymeleaf</p>
 </div>
+
+<!-- Logout confirmation popup -->
+<div id="logoutPopup" class="logout-popup">
+    <p>Are you sure you want to log out?</p>
+    <button id="confirmLogout">Logout</button>
+    <button class="cancel" id="cancelLogout">Cancel</button>
+</div>
+
+<script>
+    // Get the logout link
+    var logoutLink = document.getElementById('logout');
+
+    // Get the logout confirmation popup
+    var logoutPopup = document.getElementById('logoutPopup');
+
+    // Get the confirm logout button
+    var confirmLogoutBtn = document.getElementById('confirmLogout');
+
+    // Get the cancel logout button
+    var cancelLogoutBtn = document.getElementById('cancelLogout');
+
+    // Show the logout confirmation popup when the logout link is clicked
+    logoutLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        logoutPopup.style.display = 'block';
+    });
+
+    // Hide the logout confirmation popup when the cancel button is clicked
+    cancelLogoutBtn.addEventListener('click', function() {
+        logoutPopup.style.display = 'none';
+    });
+
+    // Redirect to logout URL when the confirm logout button is clicked
+    confirmLogoutBtn.addEventListener('click', function() {
+        window.location.href = '/logout';
+    });
+</script>
+
 </body>
 </html>
