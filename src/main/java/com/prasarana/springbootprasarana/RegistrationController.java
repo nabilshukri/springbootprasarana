@@ -44,7 +44,7 @@ public class RegistrationController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole("ADMIN");
         myUserRepository.save(user);
-        return ResponseEntity.ok("User registered successfully");
+        return ResponseEntity.ok("Admin registered successfully");
     }
 
 }
