@@ -16,6 +16,11 @@ This project is a web application developed using Spring Boot, Thymeleaf, and Sp
 - PostgreSQL
 - IDE (e.g., IntelliJ IDEA)
 
+## Default Admin Credentials
+The default created admin account credentials are:
+- Username: admin
+- Password: admin
+
 ## Setup Instructions
 
 1. **Clone the repository:**
@@ -40,6 +45,11 @@ This project is a web application developed using Spring Boot, Thymeleaf, and Sp
 
 5. **Access the application:**
     Open your browser and navigate to `http://localhost:8080`
+
+6. **Default Admin Credentials:**
+    The default created admin account credentials are:
+    - Username: admin
+    - Password: admin
 
 ## Documentation
 ### Authentication and Authorization
